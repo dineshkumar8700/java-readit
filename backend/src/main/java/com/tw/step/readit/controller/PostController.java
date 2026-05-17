@@ -5,6 +5,8 @@ import com.tw.step.readit.model.AddPostResponse;
 import com.tw.step.readit.model.LoginResponse;
 import com.tw.step.readit.model.NewPost;
 import com.tw.step.readit.service.PostService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tools.jackson.databind.JsonNode;
@@ -26,8 +28,9 @@ public class PostController {
     }
 
     @PostMapping("/api/add-post")
-    public ResponseEntity<AddPostResponse> addPost(@RequestBody AddPostRequest post) {
-        NewPost newPost = this.postService.addPost(post);
+    public ResponseEntity<AddPostResponse> addPost(@RequestBody AddPostRequest post, @CookieValue("session_id") String author) {
+        NewPost newPost = this.postService.addPost(post, author);
+
         return  ResponseEntity.ok().body(new AddPostResponse(newPost, true));
     }
 

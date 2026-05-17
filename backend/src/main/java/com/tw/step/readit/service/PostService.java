@@ -17,8 +17,8 @@ public class PostService {
         this.posts.add(newPost);
     }
 
-    public NewPost addPost(AddPostRequest post) {
-        NewPost newPost = new NewPost(this.currentPostId++, post.title(), post.body(), "dinesh8700", "own", post.date());
+    public NewPost addPost(AddPostRequest post, String author) {
+        NewPost newPost = new NewPost(this.currentPostId++, post.title(), post.body(), author, "own", post.date());
         this.posts.add(newPost);
         return newPost;
     }
