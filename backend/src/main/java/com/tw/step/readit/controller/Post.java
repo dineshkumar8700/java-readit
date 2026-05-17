@@ -1,22 +1,31 @@
 package com.tw.step.readit.controller;
 
-import com.tw.step.readit.model.PostResponse;
+import com.tw.step.readit.model.AddPostRequest;
+import com.tw.step.readit.model.AddPostResponse;
+import com.tw.step.readit.model.NewPost;
+import com.tw.step.readit.service.PostService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
 public class Post {
-    @GetMapping("/api/posts")
-    public ResponseEntity<ArrayList<PostResponse>> posts() {
-        System.out.println("Get Posts request came");
-        ArrayList<PostResponse> posts = new ArrayList<>();
-        posts.add(new PostResponse("Hello world", "Today is sundayy", "dinesh8700", "own", "17-05-2026"));
+    private final PostService postService;
 
+    public Post(PostService postService) {
+        this.postService = postService;
+    }
+
+    @GetMapping("/api/posts")
+    public ResponseEntity<ArrayList<NewPost>> posts() {
         return ResponseEntity
                 .ok()
-                .body(posts);
+                .body(this.postService.getPosts());
+    }
+
+    @PostMapping("/api/add-post")
+    public ResponseEntity<AddPostResponse> addPost(@RequestBody AddPostRequest post) {
+        NewPost newPost = this.postService.addPost(post);
+        return  ResponseEntity.ok().body(new AddPostResponse(newPost, true));
     }
 }

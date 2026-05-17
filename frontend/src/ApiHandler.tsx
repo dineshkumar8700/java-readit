@@ -27,8 +27,12 @@ export const updateFeed = (dispatch: Dispatch) => {
 };
 
 export const handleAddPost = (newPost: NewPost, dispatch: Dispatch) => {
+    console.log(newPost)
     fetch(`${API}/api/add-post`, {
         method: "post",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(newPost),
         credentials: "include",
     })
