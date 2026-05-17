@@ -4,13 +4,13 @@ import com.tw.step.readit.model.AddPostRequest;
 import com.tw.step.readit.model.AddPostResponse;
 import com.tw.step.readit.model.LoginResponse;
 import com.tw.step.readit.model.NewPost;
+import com.tw.step.readit.repository.Post;
 import com.tw.step.readit.service.PostService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tools.jackson.databind.JsonNode;
-import java.util.ArrayList;
+
+import java.util.List;
 
 @RestController
 public class PostController {
@@ -21,7 +21,7 @@ public class PostController {
     }
 
     @GetMapping("/api/posts")
-    public ResponseEntity<ArrayList<NewPost>> posts() {
+    public ResponseEntity<List<Post>> posts() {
         return ResponseEntity
                 .ok()
                 .body(this.postService.getPosts());

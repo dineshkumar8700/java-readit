@@ -9,6 +9,7 @@ export const fetchInitialPosts = async (dispatch: Dispatch) => {
     });
 
     const posts = await res.json();
+    console.log(posts);
     dispatch({
         type: "initial-data",
         payload: { posts },

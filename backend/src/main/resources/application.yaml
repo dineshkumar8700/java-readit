@@ -1,6 +1,9 @@
 spring:
   application:
     name: readit
+  mongodb:
+    uri: ${MONGO_URI}
+
 
 server:
   port: 9000
