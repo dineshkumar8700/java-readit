@@ -22,11 +22,11 @@ public class PostService {
         return this.postRepository.save(newPost);
     }
 
-    public ArrayList<FormattedPost> getPosts(String username) {
+    public List<FormattedPost> getPosts(String username) {
         List<Post> posts = this.postRepository.findAll();
         ArrayList<FormattedPost> formattedPost = new ArrayList<>();
 
-        for (Post post: posts) {
+        for (Post post : posts) {
             String type = post.author().equals(username) ? "own" : "subscribed";
             boolean isLiked = post.likedBy().contains(username);
             int likes = post.likedBy().size();
@@ -34,10 +34,10 @@ public class PostService {
             formattedPost.add(new FormattedPost(post, type, isLiked, likes));
         }
 
-        return formattedPost;
+        return formattedPost.reversed();
     }
 
-    public void deletePost(int id) {
-        System.out.println("Deleting");
+    public void deletePost(String id) {
+        this.postRepository.deleteById(id);
     }
 }

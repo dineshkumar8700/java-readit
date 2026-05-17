@@ -35,7 +35,7 @@ public class PostController {
 
     @DeleteMapping("/api/post")
     public ResponseEntity<LoginResponse> delete(@RequestBody JsonNode body) {
-        int id = body.get("id").asInt();
+        String id = body.get("id").asString();
         this.postService.deletePost(id);
         return ResponseEntity.ok().body(new LoginResponse(true));
     }
