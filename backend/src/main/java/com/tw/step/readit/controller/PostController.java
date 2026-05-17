@@ -30,13 +30,20 @@ public class PostController {
     @PostMapping("/api/add-post")
     public ResponseEntity<AddPostResponse> addPost(@RequestBody AddPostRequest post, @CookieValue("session_id") String author) {
         Post newPost = this.postService.addPost(post, author);
-        return  ResponseEntity.ok().body(new AddPostResponse(newPost, true));
+        return ResponseEntity.ok().body(new AddPostResponse(newPost, true));
     }
 
     @DeleteMapping("/api/post")
     public ResponseEntity<LoginResponse> delete(@RequestBody JsonNode body) {
         String id = body.get("id").asString();
         this.postService.deletePost(id);
+        return ResponseEntity.ok().body(new LoginResponse(true));
+    }
+
+    @PostMapping("/api/toggle-like")
+    public ResponseEntity<LoginResponse> get(@RequestBody JsonNode body, @CookieValue("session_id") String username) {
+        String id = body.get("postId").asString();
+        this.postService.toggleLike(id, username);
         return ResponseEntity.ok().body(new LoginResponse(true));
     }
 }

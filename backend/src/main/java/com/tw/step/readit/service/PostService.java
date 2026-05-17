@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -39,5 +40,31 @@ public class PostService {
 
     public void deletePost(String id) {
         this.postRepository.deleteById(id);
+    }
+
+    public void toggleLike(String id, String username) {
+        Optional<Post> optionalPost = this.postRepository.findById(id);
+
+        if (optionalPost.isPresent()) {
+            Post oldPost = optionalPost.get();
+
+            List<String> updatedLikes = new ArrayList<>(oldPost.likedBy());
+            if (updatedLikes.contains(username)) {
+                updatedLikes.remove(username);
+            } else {
+                updatedLikes.add(username);
+            }
+
+            Post updatedPost = new Post(
+                    oldPost.id(),
+                    oldPost.title(),
+                    oldPost.body(),
+                    oldPost.date(),
+                    oldPost.author(),
+                    updatedLikes
+            );
+
+            this.postRepository.save(updatedPost);
+        }
     }
 }

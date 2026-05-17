@@ -9,6 +9,7 @@ const useLike = (initialLiked: boolean, initialLikes: number) => {
   const toggle = async (id: string) => {
     const res = await fetch(`${APIHandler.API}/api/toggle-like`, {
       method: "POST",
+      headers: {"Content-Type":"application/json"},
       body: JSON.stringify({ postId: id }),
       credentials: "include",
     });
