@@ -2,8 +2,8 @@ package com.tw.step.readit.controller;
 
 import com.tw.step.readit.model.AddPostRequest;
 import com.tw.step.readit.model.AddPostResponse;
+import com.tw.step.readit.model.FormattedPost;
 import com.tw.step.readit.model.LoginResponse;
-import com.tw.step.readit.model.NewPost;
 import com.tw.step.readit.repository.Post;
 import com.tw.step.readit.service.PostService;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,10 @@ public class PostController {
     }
 
     @GetMapping("/api/posts")
-    public ResponseEntity<List<Post>> posts() {
+    public ResponseEntity<List<FormattedPost>> posts(@CookieValue("session_id") String username) {
         return ResponseEntity
                 .ok()
-                .body(this.postService.getPosts());
+                .body(this.postService.getPosts(username));
     }
 
     @PostMapping("/api/add-post")
