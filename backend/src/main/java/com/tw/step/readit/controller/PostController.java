@@ -29,8 +29,7 @@ public class PostController {
 
     @PostMapping("/api/add-post")
     public ResponseEntity<AddPostResponse> addPost(@RequestBody AddPostRequest post, @CookieValue("session_id") String author) {
-        NewPost newPost = this.postService.addPost(post, author);
-
+        Post newPost = this.postService.addPost(post, author);
         return  ResponseEntity.ok().body(new AddPostResponse(newPost, true));
     }
 

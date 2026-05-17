@@ -1,4 +1,6 @@
 package com.tw.step.readit.model;
 
-public record AddPostResponse(NewPost post, boolean success) {
+import com.tw.step.readit.repository.Post;
+
+public record AddPostResponse(Post post, boolean success) {
 }
