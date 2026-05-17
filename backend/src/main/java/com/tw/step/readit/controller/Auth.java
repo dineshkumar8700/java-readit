@@ -17,11 +17,8 @@ public class Auth {
 
         if (cookies == null) return sendLoginResponse(false);
 
-
         for (Cookie cookie: cookies) {
-            if(cookie.getName().equals("session_id")){
-                return sendLoginResponse(true);
-            }
+            if(cookie.getName().equals("session_id")) return sendLoginResponse(true);
         }
 
         return sendLoginResponse(false);
@@ -43,7 +40,7 @@ public class Auth {
     }
 
     private static Cookie setSessionId(String username) {
-        Cookie cookie = new Cookie("session_in", username);
+        Cookie cookie = new Cookie("session_id", username);
         cookie.setMaxAge(86400);
         cookie.setPath("/");
 

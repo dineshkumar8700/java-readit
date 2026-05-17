@@ -13,6 +13,7 @@ public class Post {
     public ResponseEntity<ArrayList<PostResponse>> posts() {
         System.out.println("Get Posts request came");
         ArrayList<PostResponse> posts = new ArrayList<>();
+        posts.add(new PostResponse("Hello world", "Today is sundayy", "dinesh8700", "own", "17-05-2026"));
 
         return ResponseEntity
                 .ok()
