@@ -27,7 +27,6 @@ export const updateFeed = (dispatch: Dispatch) => {
 };
 
 export const handleAddPost = (newPost: NewPost, dispatch: Dispatch) => {
-    console.log(newPost)
     fetch(`${API}/api/add-post`, {
         method: "post",
         headers: {
@@ -50,6 +49,9 @@ export const handleAddPost = (newPost: NewPost, dispatch: Dispatch) => {
 export const hanldeDeletePost = (id: string, dispatch: Dispatch) =>
     fetch(`${API}/api/post`, {
         method: "delete",
+        headers: {
+            "Content-Type":"application/json",
+        },
         body: JSON.stringify({ id }),
         credentials: "include",
     })

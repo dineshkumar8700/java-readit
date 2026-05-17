@@ -9,20 +9,26 @@ import java.util.ArrayList;
 @Service
 public class PostService {
     private final ArrayList<NewPost> posts;
+    private int currentPostId = 1;
 
     public PostService() {
         this.posts = new ArrayList<>();
-        NewPost newPost = new NewPost("Hello world", "Today is sunday", "dinesh8700", "own", "17-05-2026");
+        NewPost newPost = new NewPost(this.currentPostId++, "Hello world", "Today is sunday", "dinesh8700", "own", "17-05-2026");
         this.posts.add(newPost);
     }
 
     public NewPost addPost(AddPostRequest post) {
-        NewPost newPost = new NewPost(post.title(), post.body(), "", "", post.date());
+        NewPost newPost = new NewPost(this.currentPostId++, post.title(), post.body(), "dinesh8700", "own", post.date());
         this.posts.add(newPost);
         return newPost;
     }
 
     public ArrayList<NewPost> getPosts() {
         return this.posts;
+    }
+
+    public boolean deletePost(int id) {
+        this.posts.removeIf(post -> post.id() == id);
+        return true;
     }
 }
