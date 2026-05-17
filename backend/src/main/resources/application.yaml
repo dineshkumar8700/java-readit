@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: readit
+
+server:
+  port: 9000
