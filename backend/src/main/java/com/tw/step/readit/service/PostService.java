@@ -1,9 +1,7 @@
 package com.tw.step.readit.service;
 
-import com.tw.step.readit.model.AddPostRequest;
-import com.tw.step.readit.model.FormattedPost;
-import com.tw.step.readit.repository.Post;
-import com.tw.step.readit.repository.PostRepository;
+import com.tw.step.readit.model.*;
+import com.tw.step.readit.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,9 +16,10 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Post addPost(AddPostRequest post, String author) {
-        Post newPost = new Post(null, post.title(), post.body(), post.date(), author, new ArrayList<>());
-        return this.postRepository.save(newPost);
+    public FormattedPost addPost(AddPostRequest post, String author) {
+        Post mongoPost = new Post(null, post.title(), post.body(), post.date(), author, new ArrayList<>());
+        Post savedPost = this.postRepository.save(mongoPost);
+        return formatPost(savedPost, author);
     }
 
     public List<FormattedPost> getPosts(String username) {
@@ -28,14 +27,18 @@ public class PostService {
         ArrayList<FormattedPost> formattedPost = new ArrayList<>();
 
         for (Post post : posts) {
-            String type = post.author().equals(username) ? "own" : "subscribed";
-            boolean isLiked = post.likedBy().contains(username);
-            int likes = post.likedBy().size();
-
-            formattedPost.add(new FormattedPost(post, type, isLiked, likes));
+            formattedPost.add(this.formatPost(post, username));
         }
 
         return formattedPost.reversed();
+    }
+
+    private FormattedPost formatPost(Post post, String username) {
+        String type = post.author().equals(username) ? "own" : "subscribed";
+        boolean isLiked = post.likedBy().contains(username);
+        int likes = post.likedBy().size();
+
+        return new FormattedPost(post, type, isLiked, likes);
     }
 
     public void deletePost(String id) {
