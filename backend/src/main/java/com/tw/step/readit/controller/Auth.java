@@ -28,7 +28,7 @@ public class Auth {
         return ResponseEntity.ok().body(new LoginResponse(success));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login-user")
     public ResponseEntity<LoginResponse> handleLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
         String username = loginRequest.username();
         String password = loginRequest.password();

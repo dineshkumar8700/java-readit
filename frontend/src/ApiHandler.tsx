@@ -5,6 +5,9 @@ export const API = "http://localhost:9000";
 
 export const fetchInitialPosts = async (dispatch: Dispatch) => {
     const res = await fetch(`${API}/api/posts`, {
+        headers: {
+          "Content-Type":"application/json",
+        },
         credentials: "include",
     });
 

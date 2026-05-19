@@ -23,7 +23,7 @@ const handleSubmit = (
   password: string,
   updater: (x: boolean) => void,
 ) => {
-  fetch(`${APIHandler.API}/login`, {
+  fetch(`${APIHandler.API}/login-user`, {
     method: "post",
     headers: {
         "Content-Type": "application/json",
